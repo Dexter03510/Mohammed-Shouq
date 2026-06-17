@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>دعوة زفاف محمد &amp; شوق</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Great+Vibes&family=Tajawal:wght@300;400;500;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Tajawal', 'Inter', sans-serif; background: #0a0a0a; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .notranslate { user-select: none; }
+
+    /* ===== SEARCH: envelope overlay ===== */
+    #envelope-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.03);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    #envelope-overlay.open { opacity: 0; transform: scale(1.1); pointer-events: none; }
+
+    .curtain-left, .curtain-right {
+      position: absolute; top: 0; bottom: 0; width: 50%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 28px,
+          rgba(200,162,74,0.03) 28px,
+          rgba(200,162,74,0.03) 30px
+        ),
+        rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px) saturate(1.2);
+      -webkit-backdrop-filter: blur(10px) saturate(1.2);
+      transition: transform 2.2s cubic-bezier(0.76, 0, 0.24, 1);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .curtain-left { left: 0; }
+    .curtain-right { right: 0; }
+    .curtain-left::before, .curtain-right::before {
+      content: ''; position: absolute; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, transparent 5%, rgba(200,162,74,0.3) 20%, rgba(200,162,74,0.5) 50%, rgba(200,162,74,0.3) 80%, transparent 95%);
+      box-shadow: 0 0 8px rgba(200,162,74,0.15);
+    }
+    .curtain-left::before { right: 0; }
+    .curtain-right::before { left: 0; }
+    .curtain-left.open { transform: translateX(-100%); }
+    .curtain-right.open { transform: translateX(100%); }
+    .curtain-left::after, .curtain-right::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+      pointer-events: none;
+    }
+
+    .wax-seal-btn {
+      position: relative; z-index: 10;
+      width: 230px; height: 230px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #1a1a1a 0%, #0d0d0d 100%);
+      border: 2px solid #C8A24A;
+      cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: #C8A24A; font-family: 'Inter', sans-serif;
+      box-shadow: 0 12px 48px rgba(200,162,74,0.2), 0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(200,162,74,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .wax-seal-btn:hover { transform: scale(1.06); box-shadow: 0 12px 48px rgba(200,162,74,0.35), 0 0 40px rgba(200,162,74,0.15); }
+    .wax-seal-btn .initials { font-size: 0.9rem; font-weight: 500; text-align: center; line-height: 1.3; }
+    .wax-seal-btn .initials .ampersand { font-size: 0.75rem; opacity: 0.7; }
+    .wax-seal-btn .open-text { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.3em; margin-top: 6px; opacity: 0.6; color: #a68832; }
+
+    .pulse-ring {
+      position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+      border: 2px solid rgba(200,162,74,0.5);
+      animation: pulseRing 2.8s ease-in-out infinite;
+    }
+    .wax-seal-btn { }
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.18); opacity: 0; }
+    }
+
+    /* ===== SEARCH: invitation card wrapper ===== */
+    #invitation-card {
+      width: 100%; max-width: 393px; margin: 0 auto;
+      background: #0d0d0d; overflow: hidden;
+      position: relative; min-height: 100vh;
+      box-shadow: 0 0 60px rgba(200,162,74,0.05), 0 0 40px rgba(0,0,0,0.5);
+    }
+
+    /* ===== SEARCH: section base ===== */
+    .section-card {
+      position: relative; min-height: 700px; padding: 32px 16px;
+    }
+    .section-card.hero { min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; padding-top: 112px; }
+    .section-card.footer-section { min-height: 340px; position: relative; display: flex; flex-direction: column; }
+    .section-card.footer-section .content-layer { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 16px; }
+
+    .content-layer { position: relative; z-index: 10; }
+
+    /* ===== SEARCH: hero section ===== */
+    .hero-divider-top {
+      margin: 0 auto 32px; height: 1px; width: 96px;
+      background: linear-gradient(90deg, transparent, rgba(200,162,74,0.4), transparent);
+    }
+    .event-title-text {
+      font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 32px;
+      color: #a68832; min-height: 24px; line-height: 1.5;
+    }
+    .name-lg {
+      font-size: 3.75rem; font-weight: 300; line-height: 1.4;
+      padding: 0.25rem 0; display: block;
+    }
+    .ampersand-lg {
+      font-size: 2.25rem; font-weight: 300; line-height: 1.4;
+      padding: 0.25rem 0; display: block;
+      font-family: 'Great Vibes', cursive;
+      color: #C8A24A;
+    }
+    .date-time-text {
+      font-size: 0.875rem; letter-spacing: 0.025em; white-space: nowrap;
+      color: #8a8a8a;
+    }
+    .hero-bottom-line {
+      position: absolute; bottom: 64px; left: 40px; right: 40px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,162,74,0.3), transparent);
+    }
+
+    /* ===== SEARCH: glass card ===== */
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(200,162,74,0.15);
+      border-radius: 22px; padding: 16px;
+      max-width: 768px; margin: 0 auto 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    /* ===== SEARCH: date card ===== */
+    .date-card-wrap { perspective: 1200px; margin-bottom: 32px; padding: 0 16px; }
+    .date-card-inner {
+      max-width: 260px; margin: 0 auto; overflow: hidden;
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(200,162,74,0.08), 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(200,162,74,0.1);
+      border: 1px solid rgba(200,162,74,0.2);
+    }
+    .date-card-top {
+      position: relative; display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+      border-bottom: 1px solid rgba(200,162,74,0.1);
+    }
+    .date-card-notch {
+      position: absolute; top: 0; width: 20px; height: 24px; border-radius: 0 0 50% 50%;
+      background: linear-gradient(to bottom, rgba(200,162,74,0.08), rgba(200,162,74,0.2));
+      border: 1.5px solid rgba(200,162,74,0.3);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.25);
+    }
+    .date-card-notch.left { left: 33%; transform: translateX(-50%); }
+    .date-card-notch.right { right: 33%; transform: translateX(50%); }
+    .date-card-top-text { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.6; color: #C8A24A; }
+    .date-card-month { font-size: 1rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #F0D98A; }
+    .date-card-bottom {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 24px 16px;
+      background: rgba(20,20,20,0.95);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    }
+    .date-card-day-num { font-size: 6rem; font-weight: 700; line-height: 1; color: #F0D98A; }
+    .date-card-divider { width: 48px; height: 1px; margin: 16px 0; background: rgba(200,162,74,0.2); }
+    .date-card-weekday { font-size: 0.875rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; color: #a0a0a0; }
+    .date-card-time { font-size: 1.125rem; font-weight: 600; letter-spacing: 0.1em; color: #e0e0e0; }
+
+    /* ===== SEARCH: save the date button ===== */
+    .save-date-btn {
+      display: block; margin: 0 auto; padding: 12px 24px; font-size: 0.875rem;
+      background: linear-gradient(135deg, #C8A24A 0%, #A68832 100%);
+      color: #0a0a0a; font-weight: 600;
+      border: none;
+      border-radius: 999px; cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .save-date-btn:hover { transform: scale(1.05); }
+    .save-date-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ===== SEARCH: countdown ===== */
+    .countdown-container { margin-top: 32px; padding: 16px; }
+    .countdown-label { text-align: center; font-size: 0.875rem; letter-spacing: 0.1em; margin-bottom: 16px; color: #a68832; }
+    .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .countdown-cell { text-align: center; padding: 12px; border-radius: 12px; background: rgba(200,162,74,0.06); border: 1px solid rgba(200,162,74,0.15); }
+    .countdown-value { font-size: 1.5rem; font-weight: 500; color: #F0D98A; }
+    .countdown-unit { font-size: 0.75rem; letter-spacing: 0.05em; margin-top: 4px; color: #8a8a8a; }
+
+    /* ===== SEARCH: program timeline ===== */
+    .program-header { text-align: center; font-size: 1.25rem; margin-bottom: 32px; color: #C8A24A; }
+    .timeline-container { padding: 16px; margin-bottom: 32px; }
+    .timeline-outer { position: relative; }
+    .timeline-line {
+      position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, transparent, rgba(200,162,74,0.3), transparent);
+    }
+    .timeline-item { position: relative; display: flex; align-items: center; min-height: 68px; }
+    .timeline-item:hover .timeline-dot-inner { background: #C8A24A; }
+    .timeline-time { width: calc(50% - 14px); display: flex; align-items: center; justify-content: flex-end; padding-right: 24px; }
+    .timeline-time span { font-size: 0.875rem; font-weight: 700; text-align: right; color: #a0a0a0; transition: color 0.3s; }
+    .timeline-dot { display: flex; align-items: center; justify-content: center; width: 28px; flex-shrink: 0; z-index: 10; }
+    .timeline-dot-inner { width: 10px; height: 10px; border-radius: 50%; background: rgba(200,162,74,0.25); transition: all 0.5s; }
+    .timeline-dot-inner.active { background: #C8A24A; box-shadow: 0 0 0 4px rgba(200,162,74,0.3), 0 0 18px 8px rgba(200,162,74,0.35); transform: scale(1.5); animation: glowPulse 2s ease-in-out infinite; }
+    .timeline-item.active .timeline-time span,
+    .timeline-item.active .timeline-title span { color: #C8A24A; }
+    .timeline-title { width: calc(50% - 14px); display: flex; align-items: center; justify-content: flex-start; padding-left: 24px; }
+    .timeline-title span { font-size: 0.875rem; font-weight: 700; text-align: left; color: #ccc; transition: color 0.3s; }
+
+    /* ===== SEARCH: rules section ===== */
+    .rules-header { text-align: center; font-size: 1.25rem; margin-bottom: 24px; color: #C8A24A; }
+    .rules-outer { position: relative; padding-left: 32px; }
+    .rules-line { position: absolute; left: 12px; top: 12px; bottom: 12px; width: 1px; background: linear-gradient(to bottom, transparent, rgba(200,162,74,0.3), transparent); }
+    .rule-item { position: relative; display: flex; align-items: center; gap: 12px; min-height: 52px; }
+    .rule-dot { position: absolute; left: -20px; width: 10px; height: 10px; border-radius: 50%; top: 50%; margin-top: -5px; background: rgba(200,162,74,0.25); }
+    .rule-card {
+      display: flex; align-items: center; gap: 12px; flex: 1;
+      padding: 10px 12px; border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(200,162,74,0.12);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      opacity: 0; transform: translateX(16px); transition: opacity 0.38s ease, transform 0.38s ease;
+    }
+    .rule-card.visible { opacity: 1; transform: translateX(0); }
+    .rule-card:hover { border-color: rgba(200,162,74,0.3); }
+    .rule-icon-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(200,162,74,0.2); color: #C8A24A; }
+    .rule-text { font-size: 0.875rem; line-height: 1.3; color: #ccc; }
+
+    /* ===== SEARCH: personal message ===== */
+    .pm-title { font-size: 1rem; margin-bottom: 16px; letter-spacing: 0.05em; text-align: center; color: #C8A24A; }
+    .pm-body { font-size: 1rem; white-space: pre-line; margin-bottom: 16px; color: #a0a0a0; text-align: center; }
+    .pm-signature { font-size: 1rem; white-space: pre-line; text-align: center; }
+
+    /* ===== SEARCH: gallery ===== */
+    .gallery-img { width: 100%; aspect-ratio: 16/9; border-radius: 12px; background-size: cover; background-position: center; background-color: #1a1a1a; border: 1px solid rgba(200,162,74,0.1); transition: opacity 0.4s ease; }
+    .gallery-img.fade { opacity: 0; }
+
+    /* ===== SEARCH: footer ===== */
+    .footer-divider { margin: 0 40px 24px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,162,74,0.3), transparent); }
+    .footer-names { font-size: 1.25rem; margin-bottom: 8px; text-align: center; color: #e0e0e0; }
+    .footer-date-text { font-size: 1rem; margin-bottom: 8px; color: #8a8a8a; text-align: center; }
+    .footer-heart { width: 20px; height: 20px; margin: 0 auto 16px; display: block; fill: #C8A24A; filter: drop-shadow(0 0 6px rgba(200,162,74,0.4)); }
+    .footer-made { font-size: 0.875rem; color: #8a8a8a; text-align: center; cursor: pointer; transition: opacity 0.2s; display: block; text-decoration: none; }
+    .footer-made:hover { color: #C8A24A; }
+
+    /* ===== SEARCH: taskbar ===== */
+    #taskbar {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      width: 383px; max-width: calc(100% - 32px); height: 64px; z-index: 999;
+      display: flex; align-items: center; justify-content: space-around; padding: 0 8px;
+      background: rgba(20,20,20,0.85);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      border: 1px solid rgba(200,162,74,0.15);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 40px rgba(200,162,74,0.03);
+    }
+    .taskbar-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: none; border: none; cursor: pointer; padding: 0;
+      font-family: 'Inter', sans-serif; transition: transform 0.15s;
+    }
+    .taskbar-btn:hover { transform: scale(1.12); }
+    .taskbar-btn:active { transform: scale(0.95); }
+    .taskbar-icon-circle {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.05);
+    }
+    .taskbar-icon-circle.active { background: rgba(200,162,74,0.15); box-shadow: 0 0 16px rgba(200,162,74,0.6); }
+    .taskbar-icon-circle svg { width: 16px; height: 16px; transition: color 0.2s; stroke: #C8A24A; }
+    .taskbar-label {
+      font-size: 10px; transition: all 0.2s; color: #8a8a8a;
+    }
+    .taskbar-label.active { font-weight: 700; color: #C8A24A; }
+    .camera-btn-wrap {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #C8A24A 0%, #F0D98A 50%, #C8A24A 100%);
+      box-shadow: 0 6px 24px rgba(200,162,74,0.5), 0 0 0 2px rgba(200,162,74,0.2), inset 0 1px 1px rgba(255,255,255,0.4);
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+    .camera-btn-wrap svg { width: 24px; height: 24px; color: #0a0a0a; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2)); }
+    .taskbar-spacer { height: 96px; }
+
+    /* ===== SEARCH: modal ===== */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000;
+    }
+    .modal-sheet {
+      position: fixed; bottom: 80px; left: 16px; right: 16px;
+      max-width: 400px; margin: 0 auto; z-index: 1001;
+      border-radius: 24px;
+      background: rgba(18,18,18,0.98);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(200,162,74,0.15);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 40px rgba(200,162,74,0.03);
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.25s ease;
+      transform: translateY(100%); opacity: 0;
+      pointer-events: none;
+    }
+    .modal-sheet.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .modal-header {
+      position: relative; display: flex; align-items: center; justify-content: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(200,162,74,0.1);
+      background: linear-gradient(to right, rgba(20,20,20,0.6), rgba(30,30,30,0.6));
+    }
+    .modal-title { font-size: 0.875rem; font-weight: 600; color: #C8A24A; letter-spacing: 0.025em; }
+    .modal-close {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(200,162,74,0.1); }
+    .modal-close svg { width: 16px; height: 16px; color: #C8A24A; }
+    .modal-content { padding: 16px; max-height: 65vh; overflow-y: auto; }
+
+    /* ===== SEARCH: music overlay particles ===== */
+    #particles-container { position: fixed; inset: 0; pointer-events: none; z-index: 10; overflow: hidden; }
+    .particle {
+      position: absolute; border-radius: 50%; background: rgba(200,162,74,0.15);
+      animation: particleFall linear infinite;
+    }
+    @keyframes particleFall { to { transform: translateY(100vh); } }
+    @keyframes vinylSpin { to { transform: rotate(360deg); } }
+    @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 8px rgba(200,162,74,0.4)) drop-shadow(0 0 16px rgba(200,162,74,0.2)); } 50% { filter: drop-shadow(0 0 20px rgba(200,162,74,0.7)) drop-shadow(0 0 40px rgba(200,162,74,0.4)); } }
+    @keyframes sparkle { 0% { opacity: 0; transform: scale(0) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(180deg); } 100% { opacity: 0; transform: scale(0) rotate(360deg); } }
+    @keyframes countdownFlip { 0% { transform: translateY(-8px); opacity: 0.4; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(24px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes confettiFall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+    /* transition classes */
+    .fade-enter { opacity: 0; transform: translateY(10px); }
+    .fade-enter-active { opacity: 1; transform: translateY(0); transition: all 0.6s ease; }
+
+    /* ===== SEARCH: WOW enhancements ===== */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #F0D98A, #C8A24A, #F0D98A, #A68832);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+    }
+    .shimmer-btn {
+      position: relative; overflow: hidden;
+    }
+    .shimmer-btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .float-anim { animation: float 4s ease-in-out infinite; }
+    .glow-border {
+      border-color: rgba(200,162,74,0.2) !important;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+    .confetti-piece {
+      position: fixed; width: 10px; height: 10px; z-index: 10000; pointer-events: none;
+      animation: confettiFall linear forwards;
+    }
+    .sparkle-star {
+      position: absolute; width: 8px; height: 8px; pointer-events: none;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    .sparkle-star::before, .sparkle-star::after {
+      content: ''; position: absolute; background: #C8A24A;
+    }
+    .sparkle-star::before { width: 100%; height: 2px; top: 50%; left: 0; transform: translateY(-50%); }
+    .sparkle-star::after { height: 100%; width: 2px; left: 50%; top: 0; transform: translateX(-50%); }
+    .section-reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .section-reveal.revealed { opacity: 1; transform: translateY(0); }
+    .countdown-value.flip { animation: countdownFlip 0.3s ease; }
+
+    /* ===== Dark + Gold interactive extras ===== */
+    .glass-card-3d { transition: transform 0.2s ease; transform-style: preserve-3d; }
+    .gold-hover { transition: all 0.3s; }
+    .gold-hover:hover { color: #F0D98A !important; text-shadow: 0 0 20px rgba(200,162,74,0.3); }
+
+    /* responsive */
+    @media (max-width: 400px) {
+      .name-lg { font-size: 2.8rem; }
+      .ampersand-lg { font-size: 1.8rem; }
+      .date-card-day-num { font-size: 4.5rem; }
+    }
+
+    /* RTL overrides */
+    html[dir="rtl"] .timeline-time { padding-right: 0; padding-left: 12px; justify-content: flex-start; }
+    html[dir="rtl"] .timeline-title { padding-left: 0; padding-right: 12px; justify-content: flex-end; }
+    html[dir="rtl"] .timeline-title span { text-align: left; }
+    html[dir="rtl"] .taskbar-label { font-size: 9px; }
+    html[dir="rtl"] .event-title-text { letter-spacing: 0; }
+    html[dir="rtl"] .date-card-top-text { letter-spacing: 0; }
+    html[dir="rtl"] .countdown-label { letter-spacing: 0; }
+    html[dir="rtl"] .rules-header { letter-spacing: 0; }
+    html[dir="rtl"] .program-header { letter-spacing: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+  ===== SEARCH: envelope overlay =====
+  ===== SEARCH: names (wax seal) =====
+  ============================================================ -->
+  <div id="envelope-overlay">
+    <div class="curtain-left" id="curtainL"></div>
+    <div class="curtain-right" id="curtainR"></div>
+    <button id="waxSealBtn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);z-index:30;width:280px;height:280px;border-radius:50%;border:none;cursor:pointer;padding:0;background:transparent;transition:transform 0.3s ease;">
+      <img src="bg-letters.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;animation:glowPulse 3s ease-in-out infinite;">
+    </button>
+    <audio id="bgMusic" src="We Akhyran.mp3" preload="auto"></audio>
+  </div>
+
+  <!-- ============================================================
+  ===== SEARCH: particles overlay =====
+  ============================================================ -->
+  <div id="particles-container"></div>
+
+  <!-- ============================================================
+  ===== SEARCH: invitation card =====
+  ============================================================ -->
+  <div id="invitation-card">
+
+    <!-- ============================================================
+    ===== SEARCH: section 1 - hero =====
+    ===== SEARCH: names (hero) =====
+    ===== SEARCH: date =====
+    ===== SEARCH: time =====
+    ============================================================ -->
+    <section class="section-card hero" style="position:relative;background:linear-gradient(180deg,#0d0d0d 0%,#111 50%,#0a0a0a 100%);">
+      <div class="content-layer" style="width:100%;padding:0 24px;position:relative;">
+
+        <!-- decorative letters background -->
+        <img src="bg-letters.png" alt="" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:200%;max-width:1400px;height:auto;opacity:0.1;pointer-events:none;z-index:0;" loading="lazy">
+
+        <div class="hero-divider-top"></div>
+
+        <!-- ===== SEARCH: event title ===== -->
+        <div class="event-title-text" style="position:relative;z-index:1;">دعوة زفاف</div>
+
+        <!-- decorative sparkles -->
+        <div class="sparkle-star" style="top:12%;right:15%;animation-delay:0.3s;"></div>
+        <div class="sparkle-star" style="top:22%;left:12%;animation-delay:1.2s;width:6px;height:6px;"></div>
+        <div class="sparkle-star" style="bottom:30%;right:18%;animation-delay:2s;width:10px;height:10px;"></div>
+        <!-- ===== SEARCH: names (bride and groom) ===== -->
+        <div style="margin-top:-0.25rem;">
+          <span class="name-lg gold-gradient-text">محمد</span>
+          <span class="ampersand-lg">&amp;</span>
+          <span class="name-lg gold-gradient-text">شوق</span>
+        </div>
+
+        <!-- ===== SEARCH: date ===== -->
+        <!-- ===== SEARCH: time ===== -->
+        <div style="margin-top:0.5rem;">
+          <div class="date-time-text">الأربعاء، 19 أغسطس 2026، 8:00 مساءً</div>
+        </div>
+      </div>
+      <div class="hero-bottom-line"></div>
+    </section>
+
+    <!-- ============================================================
+    ===== SEARCH: section 2 - details / glass card =====
+    ===== SEARCH: family names =====
+    ===== SEARCH: gratitude =====
+    ===== SEARCH: invitation message =====
+    ===== SEARCH: venue / address =====
+    ===== SEARCH: date card =====
+    ===== SEARCH: countdown =====
+    ============================================================ -->
+    <section class="section-card" style="background:linear-gradient(180deg,#0a0a0a,#111 50%,#0d0d0d 100%);">
+      <div class="content-layer">
+
+        <!-- ===== SEARCH: glass card with family + message ===== -->
+        <div class="glass-card glow-border">
+          <!-- ===== SEARCH: gratitude/ornament ===== -->
+          <div class="content-layer" style="text-align:center;margin-bottom:24px;">
+            <div style="font-family:'Amiri',serif;font-size:1.25rem;color:#C8A24A;">بالحب والامتنان</div>
+          </div>
+
+          <!-- ===== SEARCH: family names ===== -->
+          <div style="display:flex;justify-content:center;align-items:center;gap:16px;font-size:1rem;margin-bottom:16px;color:#ccc;">
+            <span style="color:#8a8a8a;font-size:0.8rem;">(bride family name)</span>
+            <span style="color:#C8A24A;">&amp;</span>
+            <span style="color:#8a8a8a;font-size:0.8rem;">(groom family name)</span>
+          </div>
+          <!-- ===== SEARCH: invitation message ===== -->
+          <div style="text-align:center;font-size:1rem;margin-bottom:32px;padding:0 32px;color:#a0a0a0;">
+            يدعونكم لحفل زفاف أبنائهم
+          </div>
+
+          <!-- ===== SEARCH: names (couple) ===== -->
+          <div style="text-align:center;font-size:1.25rem;">
+            <span class="gold-gradient-text" style="font-weight:700;">محمد</span> <span style="font-family:'Amiri',serif;color:#C8A24A;">&amp;</span> <span class="gold-gradient-text" style="font-weight:700;">شوق</span>
+          </div>
+        </div>
+
+        <!-- ===== SEARCH: venue / location ===== -->
+        <div style="text-align:center;margin-bottom:32px;">
+          <div style="font-size:0.875rem;margin-bottom:8px;color:#a68832;">الموقع</div>
+          <div style="font-weight:500;color:#e0e0e0;">(venue name)</div>
+          <div style="font-size:1rem;color:#8a8a8a;">(venue address)</div>
+        </div>
+
+        <!-- ===== SEARCH: date card ===== -->
+        <div class="date-card-wrap float-anim">
+          <div class="date-card-inner">
+            <div class="date-card-top">
+              <div class="date-card-notch left"></div>
+              <div class="date-card-notch right"></div>
+              <span class="date-card-top-text">٢٠٢٦</span>
+              <span class="date-card-month">أغسطس</span>
+              <span class="date-card-top-text">أربعاء</span>
+            </div>
+            <div class="date-card-bottom">
+              <div class="date-card-day-num">19</div>
+              <div class="date-card-divider"></div>
+              <div class="date-card-weekday">الأربعاء</div>
+              <div class="date-card-time">8:00 مساءً</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SEARCH: save the date button ===== -->
+        <button class="save-date-btn shimmer-btn" onclick="saveDate()">احفظ التاريخ</button>
+
+        <!-- ===== SEARCH: countdown ===== -->
+        <div class="countdown-container">
+          <div class="countdown-label">العد التنازلي</div>
+          <div class="countdown-grid">
+            <div class="countdown-cell">
+              <div class="countdown-value" id="days">00</div>
+              <div class="countdown-unit">يوم</div>
+            </div>
+            <div class="countdown-cell">
+              <div class="countdown-value" id="hours">00</div>
+              <div class="countdown-unit">ساعة</div>
+            </div>
+            <div class="countdown-cell">
+              <div class="countdown-value" id="mins">00</div>
+              <div class="countdown-unit">دقيقة</div>
+            </div>
+            <div class="countdown-cell">
+              <div class="countdown-value" id="secs">00</div>
+              <div class="countdown-unit">ثانية</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+    ===== SEARCH: section 3 - program + rules =====
+    ===== SEARCH: program / schedule =====
+    ===== SEARCH: rules / event details =====
+    ============================================================ -->
+    <section class="section-card" style="background:linear-gradient(180deg,#0d0d0d,#111 50%,#0a0a0a 100%);min-height:auto;padding:24px 16px;">
+      <div class="content-layer">
+
+        <!-- ===== SEARCH: event program ===== -->
+        <div class="glass-card">
+          <h3 class="program-header">برنامج الحفل</h3>
+          <div class="timeline-outer">
+            <div class="timeline-line"></div>
+
+            <div class="timeline-item" onclick="toggleTimeline(this)" style="cursor:pointer;flex-direction:column;">
+              <div style="display:flex;align-items:center;width:100%;min-height:68px;">
+                <div class="timeline-time"><span>18:30</span></div>
+                <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+                <div class="timeline-title"><span>وصول الضيوف</span></div>
+              </div>
+              <div class="timeline-desc" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;width:100%;">
+                <div style="padding:4px 14px 12px calc(50% + 14px);font-size:0.8rem;color:#a0a0a0;line-height:1.5;">بدء استقبال الضيوف وتقديم المشروبات والمرطبات في بهو الفعاليات</div>
+              </div>
+            </div>
+            <div class="timeline-item" onclick="toggleTimeline(this)" style="cursor:pointer;flex-direction:column;">
+              <div style="display:flex;align-items:center;width:100%;min-height:68px;">
+                <div class="timeline-time"><span>19:00</span></div>
+                <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+                <div class="timeline-title"><span>العشاء</span></div>
+              </div>
+              <div class="timeline-desc" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;width:100%;">
+                <div style="padding:4px 14px 12px calc(50% + 14px);font-size:0.8rem;color:#a0a0a0;line-height:1.5;">بوفيه مفتوح يضم أشهى المأكولات الشرقية والغربية</div>
+              </div>
+            </div>
+            <div class="timeline-item" onclick="toggleTimeline(this)" style="cursor:pointer;flex-direction:column;">
+              <div style="display:flex;align-items:center;width:100%;min-height:68px;">
+                <div class="timeline-time"><span>19:45</span></div>
+                <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+                <div class="timeline-title"><span>دخول العروسين</span></div>
+              </div>
+              <div class="timeline-desc" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;width:100%;">
+                <div style="padding:4px 14px 12px calc(50% + 14px);font-size:0.8rem;color:#a0a0a0;line-height:1.5;">لحظة دخول محمد وشوق الميمونة على أنغام الموسيقى والتصفيق</div>
+              </div>
+            </div>
+            <div class="timeline-item" onclick="toggleTimeline(this)" style="cursor:pointer;flex-direction:column;">
+              <div style="display:flex;align-items:center;width:100%;min-height:68px;">
+                <div class="timeline-time"><span>21:00</span></div>
+                <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+                <div class="timeline-title"><span>موسيقى حية وتسلية</span></div>
+              </div>
+              <div class="timeline-desc" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;width:100%;">
+                <div style="padding:4px 14px 12px calc(50% + 14px);font-size:0.8rem;color:#a0a0a0;line-height:1.5;">فقرات موسيقية حية وعروض ترفيهية متنوعة</div>
+              </div>
+            </div>
+            <div class="timeline-item" onclick="toggleTimeline(this)" style="cursor:pointer;flex-direction:column;">
+              <div style="display:flex;align-items:center;width:100%;min-height:68px;">
+                <div class="timeline-time"><span>23:00</span></div>
+                <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+                <div class="timeline-title"><span>ختام الحفل</span></div>
+              </div>
+              <div class="timeline-desc" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;width:100%;">
+                <div style="padding:4px 14px 12px calc(50% + 14px);font-size:0.8rem;color:#a0a0a0;line-height:1.5;">ختام الحفل وتوديع الضيوف مع تقديم الهدايا التذكارية</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ===== SEARCH: rules / event details ===== -->
+        <h3 class="rules-header">تفاصيل الحفل</h3>
+        <div class="rules-outer">
+          <div class="rules-line"></div>
+
+          <div class="rule-item">
+            <div class="rule-dot"></div>
+            <div class="rule-card visible">
+              <span class="rule-icon-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              </span>
+              <span class="rule-text">ممنوع التصوير</span>
+            </div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-dot"></div>
+            <div class="rule-card visible">
+              <span class="rule-icon-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="16" r="1"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+              </span>
+              <span class="rule-text">دعوة خاصة</span>
+            </div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-dot"></div>
+            <div class="rule-card visible">
+              <span class="rule-icon-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </span>
+              <span class="rule-text">يرجى الحضور في الوقت المحدد</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+    ===== SEARCH: section 4 - personal message + gallery =====
+    ===== SEARCH: personal message =====
+    ===== SEARCH: gallery / pics / photos =====
+    ============================================================ -->
+    <section class="section-card" style="background:linear-gradient(180deg,#0a0a0a,#111 50%,#0d0d0d 100%);min-height:auto;padding:24px 16px;">
+      <div class="content-layer">
+
+        <!-- ===== SEARCH: personal message ===== -->
+        <div style="text-align:center;margin-bottom:32px;">
+          <div class="pm-title">من العروسين</div>
+          <div class="pm-body" style="color:#8a8a8a;font-size:0.8rem;">(personal message from the couple)</div>
+          <div class="pm-body">"نحن ممتنون لكل من سيشاركنا يومنا الخاص. حضوركم هو أعظم هدية على الإطلاق."</div>
+          <div class="pm-signature" style="font-family:'Amiri',serif;font-size:1.4rem;color:#c8a24a;">محمد &amp; شوق</div>
+        </div>
+
+        <!-- ===== SEARCH: gallery / pics / photos ===== -->
+        <div style="margin-bottom:32px;">
+          <div style="color:#8a8a8a;font-size:0.8rem;text-align:center;margin-bottom:8px;">(wedding photos gallery)</div>
+          <div class="gallery-img" id="galleryImg" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=225&fit=crop');"></div>
+          <div style="display:flex;justify-content:center;gap:6px;margin-top:12px;" id="galleryDots">
+            <div class="gallery-dot" style="width:6px;height:6px;border-radius:50%;background:#c8a24a;width:20px;border-radius:3px;"></div>
+            <div class="gallery-dot" style="width:6px;height:6px;border-radius:50%;background:#3a3a3a;"></div>
+            <div class="gallery-dot" style="width:6px;height:6px;border-radius:50%;background:#3a3a3a;"></div>
+            <div class="gallery-dot" style="width:6px;height:6px;border-radius:50%;background:#3a3a3a;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+    ===== SEARCH: section 5 - footer =====
+    ===== SEARCH: names (footer) =====
+    ===== SEARCH: date (footer) =====
+    ============================================================ -->
+    <section class="section-card footer-section" style="background:linear-gradient(180deg,#0d0d0d,#0a0a0a);">
+      <div class="content-layer">
+        <div class="footer-divider"></div>
+        <div class="footer-names"><span class="gold-gradient-text">محمد</span> <span style="font-family:'Amiri',serif;">&amp;</span> <span class="gold-gradient-text">شوق</span></div>
+        <div class="footer-date-text">19/08/2026</div>
+        <svg class="footer-heart" viewBox="0 0 24 24" width="24" height="24"><path fill="#C8A24A" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <a class="footer-made" href="#" style="margin-top:auto;padding-bottom:8px;">Made by WLallo</a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+    ===== SEARCH: taskbar spacer ===== -->
+    <div class="taskbar-spacer"></div>
+  </div>
+
+  <!-- ============================================================
+  ===== SEARCH: floating taskbar =====
+  ============================================================ -->
+  <div id="taskbar" style="display:none;">
+    <!-- ===== SEARCH: taskbar - contact ===== -->
+    <button class="taskbar-btn" onclick="openModal('phone')">
+      <span class="taskbar-icon-circle" id="tb-phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </span>
+      <span class="taskbar-label" id="tbl-phone">اتصال</span>
+    </button>
+
+    <!-- ===== SEARCH: taskbar - music ===== -->
+    <button class="taskbar-btn" onclick="openModal('music')">
+      <span class="taskbar-icon-circle" id="tb-music">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </span>
+      <span class="taskbar-label" id="tbl-music">الموسيقى</span>
+    </button>
+
+    <!-- ===== SEARCH: taskbar - camera (center gold) ===== -->
+    <button class="taskbar-btn" onclick="openModal('camera')">
+      <span class="camera-btn-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </span>
+    </button>
+
+    <!-- ===== SEARCH: taskbar - map/location ===== -->
+    <button class="taskbar-btn" onclick="openModal('map')">
+      <span class="taskbar-icon-circle" id="tb-map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </span>
+      <span class="taskbar-label" id="tbl-map">الموقع</span>
+    </button>
+
+  </div>
+
+  <!-- ============================================================
+  ===== SEARCH: modal sheets container =====
+
+  ===== SEARCH: phone/contact modal ===== -->
+  <div id="modal-phone" class="modal-sheet">
+    <div class="modal-header">
+      <h3 class="modal-title">اتصال</h3>
+      <button class="modal-close" onclick="closeModal('phone')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-content">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 0;">
+        <!-- ===== SEARCH: contact name ===== -->
+        <div style="font-family:'Amiri',serif;font-size:1.8rem;color:#F0D98A;">(contact person name)</div>
+        <!-- ===== SEARCH: contact phone ===== -->
+        <a href="tel:+962788746698" style="display:flex;align-items:center;gap:12px;padding:14px 24px;background:linear-gradient(135deg,#c8a24a,#a68832);color:#0a0a0a;border-radius:50px;text-decoration:none;font-weight:600;font-size:1rem;">
+          <bdi dir="ltr">+962 78 874 6698</bdi>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+        <!-- ===== SEARCH: whatsapp button ===== -->
+        <a href="https://wa.me/962788746698" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px 24px;border:1px solid #25D366;color:#25D366;border-radius:50px;text-decoration:none;font-weight:500;font-size:1rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          واتساب
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SEARCH: music modal ===== -->
+  <div id="modal-music" class="modal-sheet">
+    <div class="modal-header">
+      <h3 class="modal-title">الموسيقى</h3>
+      <button class="modal-close" onclick="closeModal('music')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-content">
+      <div class="flex flex-col items-center gap-4 py-1" style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:4px 0;">
+        <!-- ===== SEARCH: vinyl record visual ===== -->
+        <div style="width:140px;height:140px;position:relative;">
+          <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 28%,rgb(58,58,58) 0%,rgb(28,28,28) 55%,rgb(13,13,13) 100%);box-shadow:rgba(0,0,0,0.7) 0px 8px 32px,rgba(255,255,255,0.07) 0px 1px 0px inset;"></div>
+          <div style="position:absolute;width:128px;height:128px;top:6px;left:6px;border-radius:50%;background:radial-gradient(circle at 35% 25%,rgb(74,74,74) 0%,rgb(40,40,40) 50%,rgb(24,24,24) 100%);box-shadow:rgba(0,0,0,0.8) 0px 2px 6px inset,rgba(255,255,255,0.04) 0px 0px 0px 1px;"></div>
+          <div id="vinylDisc" style="position:absolute;width:116px;height:116px;top:12px;left:12px;border-radius:50%;overflow:hidden;animation:vinylSpin 8s linear infinite;animation-play-state:paused;">
+            <div style="position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle,rgb(13,13,13) 0px,rgb(24,24,24) 1.5px,rgb(13,13,13) 3px,rgb(26,26,26) 4.5px,rgb(13,13,13) 6px);"></div>
+            <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,rgba(255,255,255,0) 0deg,rgba(255,255,255,0.06) 40deg,rgba(255,255,255,0) 80deg,rgba(255,255,255,0.04) 160deg,rgba(255,255,255,0) 200deg,rgba(255,255,255,0.07) 280deg,rgba(255,255,255,0) 360deg);"></div>
+            <div style="position:absolute;width:42px;height:42px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 40% 35%,rgb(139,0,0) 0%,rgb(90,0,0) 60%,rgb(58,0,0) 100%);box-shadow:rgba(0,0,0,0.6) 0px 1px 3px inset;">
+              <div style="position:absolute;width:100%;height:1px;background:rgba(255,255,255,0.08);top:50%;left:0;transform-origin:center center;transform:rotate(0deg);"></div>
+              <div style="position:absolute;width:100%;height:1px;background:rgba(255,255,255,0.08);top:50%;left:0;transform-origin:center center;transform:rotate(45deg);"></div>
+              <div style="position:absolute;width:100%;height:1px;background:rgba(255,255,255,0.08);top:50%;left:0;transform-origin:center center;transform:rotate(90deg);"></div>
+              <div style="position:absolute;width:100%;height:1px;background:rgba(255,255,255,0.08);top:50%;left:0;transform-origin:center center;transform:rotate(135deg);"></div>
+              <div style="position:absolute;width:8px;height:8px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgb(85,85,85),rgb(17,17,17));box-shadow:rgba(0,0,0,0.9) 0px 1px 2px inset;"></div>
+            </div>
+          </div>
+          <div id="tonearm" style="position:absolute;z-index:10;width:3px;height:52px;bottom:10px;right:12px;transform-origin:center bottom;border-radius:4px;transform:rotate(-38deg);transition:transform 0.4s ease;">
+            <div style="position:absolute;inset:0;border-radius:4px;background:linear-gradient(to right,rgb(187,187,187) 0%,rgb(232,232,232) 40%,rgb(170,170,170) 60%,rgb(153,153,153) 100%);box-shadow:rgba(0,0,0,0.5) 0px 1px 4px;"></div>
+            <div style="position:absolute;top:-6px;left:-5px;width:12px;height:7px;background:linear-gradient(135deg,rgb(208,208,208),rgb(136,136,136));border-radius:2px 2px 3px 3px;box-shadow:rgba(0,0,0,0.6) 0px 2px 4px;"></div>
+            <div style="position:absolute;top:0;left:1px;width:1px;height:4px;background:rgb(204,204,204);"></div>
+          </div>
+          <div style="position:absolute;z-index:10;width:12px;height:12px;bottom:7px;right:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgb(238,238,238) 0%,rgb(170,170,170) 50%,rgb(102,102,102) 100%);box-shadow:rgba(0,0,0,0.6) 0px 2px 6px,rgba(255,255,255,0.4) 0px 1px 2px inset;"></div>
+          <button onclick="togglePlayPause()" style="position:absolute;inset:0;border-radius:50%;border:none;background:transparent;cursor:pointer;z-index:20;"></button>
+        </div>
+
+        <!-- ===== SEARCH: play/pause button ===== -->
+        <button onclick="togglePlayPause()" id="playBtn" style="width:48px;height:48px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(135deg,rgb(200,162,74),rgb(166,136,50));box-shadow:rgba(200,162,74,0.45) 0px 3px 14px;">
+          <svg class="w-5 h-5 text-white fill-white ml-0.5" width="20" height="20" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z" fill="white"/></svg>
+        </button>
+
+        <!-- ===== SEARCH: song info ===== -->
+        <div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 4px;">
+          <div style="flex:1;min-width:0;">
+            <p style="font-size:0.75rem;font-weight:600;color:#C8A24A;">Now Playing</p>
+            <p style="font-size:0.625rem;color:#8a8a8a;" id="playStatus">Paused</p>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:2px;height:20px;" id="equalizerBars">
+            <div class="eq-bar" style="width:3px;border-radius:3px;height:20px;background:rgb(200,162,74);transform-origin:50% 100%;transform:scaleY(0.15);opacity:0.3;transition:transform 0.15s,opacity 0.15s;"></div>
+            <div class="eq-bar" style="width:3px;border-radius:3px;height:20px;background:rgb(200,162,74);transform-origin:50% 100%;transform:scaleY(0.15);opacity:0.3;"></div>
+            <div class="eq-bar" style="width:3px;border-radius:3px;height:20px;background:rgb(200,162,74);transform-origin:50% 100%;transform:scaleY(0.15);opacity:0.3;"></div>
+            <div class="eq-bar" style="width:3px;border-radius:3px;height:20px;background:rgb(200,162,74);transform-origin:50% 100%;transform:scaleY(0.15);opacity:0.3;"></div>
+            <div class="eq-bar" style="width:3px;border-radius:3px;height:20px;background:rgb(200,162,74);transform-origin:50% 100%;transform:scaleY(0.15);opacity:0.3;"></div>
+            <div class="eq-bar" style="width:3px;border-radius:3px;height:20px;background:rgb(200,162,74);transform-origin:50% 100%;transform:scaleY(0.15);opacity:0.3;"></div>
+            <div class="eq-bar" style="width:3px;border-radius:3px;height:20px;background:rgb(200,162,74);transform-origin:50% 100%;transform:scaleY(0.15);opacity:0.3;"></div>
+          </div>
+        </div>
+
+        <!-- ===== SEARCH: volume slider ===== -->
+        <div style="display:flex;align-items:center;gap:8px;width:100%;">
+          <button onclick="toggleMute()" style="width:32px;height:32px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(200,162,74,0.1);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A24A" stroke-width="2"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+          </button>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1" style="flex:1;height:4px;cursor:pointer;accent-color:rgb(200,162,74);">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SEARCH: map modal ===== -->
+  <!-- ===== SEARCH: venue / venue name / location ===== -->
+  <!-- ===== SEARCH: map link / google maps ===== -->
+  <div id="modal-map" class="modal-sheet">
+    <div class="modal-header">
+      <h3 class="modal-title">الموقع</h3>
+      <button class="modal-close" onclick="closeModal('map')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-content" style="padding:16px;">
+      <div style="border-radius:24px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.3);border:1px solid rgba(200,162,74,0.15);background:#0d0d0d;">
+        <div style="position:relative;overflow:hidden;height:180px;">
+          <iframe
+            src="https://maps.google.com/maps?q=8th+Circle+Amman+Jordan&output=embed&z=15"
+            style="width:100%;height:100%;border:none;pointer-events:none;"
+            loading="lazy"
+            title="خريطة الموقع"
+          ></iframe>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:40px;pointer-events:none;background:linear-gradient(to top,rgba(13,13,13,0.85),transparent);"></div>
+          <a href="https://maps.google.com/?q=8th+Circle+Amman+Jordan" target="_blank" rel="noopener noreferrer" style="position:absolute;inset:0;"></a>
+        </div>
+        <div style="padding:12px 16px 4px;display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;background:rgba(200,162,74,0.1);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:#C8A24A;"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <!-- ===== SEARCH: venue name ===== -->
+            <div style="font-weight:700;font-size:0.875rem;line-height:1.3;color:#F0D98A;">دوار الثامن</div>
+            <!-- ===== SEARCH: venue address ===== -->
+            <div style="font-size:0.75rem;margin-top:2px;line-height:1.5;color:#a0a0a0;">عمان - الأردن</div>
+          </div>
+        </div>
+        <div style="padding:8px 16px 12px;">
+          <a href="https://maps.google.com/?q=8th+Circle+Amman+Jordan" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px;border-radius:16px;font-size:0.875rem;font-weight:600;text-decoration:none;background:rgba(200,162,74,0.1);color:#C8A24A;transition:opacity 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            فتح في خرائط جوجل
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ============================================================
+  ===== SEARCH: javascript =====
+  ===== SEARCH: config / configuration =====
+  ===== SEARCH: names (config) =====
+  ===== SEARCH: date (config) / wedding date =====
+  ===== SEARCH: groom name / bride name =====
+  ============================================================ -->
+  <script>
+    // ============================================================
+    // ===== SEARCH: config =====
+    // ===== SEARCH: names (config) =====
+    // ===== SEARCH: date / wedding date =====
+    // ============================================================
+
+    // ===== SEARCH: wedding date / WEDDING_DATE =====
+    const WEDDING_DATE = new Date('2026-08-19T20:00:00');
+
+    // ===== SEARCH: groom name / NAME_ONE =====
+    const NAME_ONE = 'محمد';
+
+    // ===== SEARCH: bride name / NAME_TWO =====
+    const NAME_TWO = 'شوق';
+
+    // ============================================================
+    // ===== SEARCH: envelope logic =====
+    // ============================================================
+    const overlay = document.getElementById('envelope-overlay');
+    const curtainL = document.getElementById('curtainL');
+    const curtainR = document.getElementById('curtainR');
+    const sealBtn = document.getElementById('waxSealBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    const taskbar = document.getElementById('taskbar');
+    const particlesContainer = document.getElementById('particles-container');
+    let envelopeOpened = false;
+
+    sealBtn.addEventListener('click', () => {
+      if (envelopeOpened) return;
+      envelopeOpened = true;
+      bgMusic.volume = 0.5;
+      bgMusic.play().then(() => { isPlaying = true; updatePlayBtn(); updatePlayStatus(); startVinyl(); }).catch(() => {});
+      curtainL.classList.add('open');
+      curtainR.classList.add('open');
+      burstConfetti();
+      setTimeout(() => {
+        overlay.classList.add('open');
+        taskbar.style.display = 'flex';
+        startParticles();
+      }, 1200);
+      setTimeout(() => { overlay.style.display = 'none'; }, 2000);
+    });
+
+    setTimeout(() => {
+      if (!envelopeOpened) {
+        taskbar.style.display = 'flex';
+      }
+    }, 3000);
+
+    // ============================================================
+    // ===== SEARCH: particles animation =====
+    // ============================================================
+    function startParticles() {
+      const colors = ['rgba(200,162,74,0.3)', 'rgba(240,217,138,0.25)', 'rgba(255,255,255,0.2)', 'rgba(166,136,50,0.2)'];
+      for (let i = 0; i < 25; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = (i * 4.2 % 100) + '%';
+        const size = 2 + i % 6;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.background = colors[i % colors.length];
+        p.style.boxShadow = i % 3 === 0 ? '0 0 6px rgba(200,162,74,0.3)' : 'none';
+        p.style.animationDuration = (10 + i % 12) + 's';
+        p.style.animationDelay = (i * 0.5 % 4) + 's';
+        particlesContainer.appendChild(p);
+      }
+    }
+
+    function burstConfetti() {
+      const confettiColors = ['#C8A24A', '#F0D98A', '#A68832', '#FFD700', '#FFF8DC', '#DAA520'];
+      for (let i = 0; i < 60; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = (10 + Math.random() * 80) + '%';
+        c.style.top = '-10px';
+        c.style.width = (4 + Math.random() * 8) + 'px';
+        c.style.height = (4 + Math.random() * 8) + 'px';
+        c.style.background = confettiColors[i % confettiColors.length];
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        c.style.animationDuration = (2 + Math.random() * 3) + 's';
+        c.style.animationDelay = (Math.random() * 1.5) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 6000);
+      }
+    }
+
+    // section reveal on scroll
+    function observeSections() {
+      const sections = document.querySelectorAll('.section-card');
+      sections.forEach((el, i) => {
+        el.classList.add('section-reveal');
+        el.style.transitionDelay = (i * 0.12) + 's';
+      });
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+      }, { threshold: 0.15 });
+      sections.forEach(s => observer.observe(s));
+    }
+    setTimeout(observeSections, 1500);
+
+    // ============================================================
+    // ===== SEARCH: countdown timer =====
+    // ============================================================
+    function updateCountdown() {
+      const now = new Date();
+      const diff = Math.max(0, WEDDING_DATE - now);
+      ['days','hours','mins','secs'].forEach(id => {
+        const el = document.getElementById(id);
+        const newVal = id === 'days' ? String(Math.floor(diff / (1000*60*60*24))).padStart(2,'0')
+          : id === 'hours' ? String(Math.floor((diff%(1000*60*60*24))/(1000*60*60))).padStart(2,'0')
+          : id === 'mins' ? String(Math.floor((diff%(1000*60*60))/(1000*60))).padStart(2,'0')
+          : String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
+        if (el.textContent !== newVal) {
+          el.textContent = newVal;
+          el.classList.remove('flip');
+          void el.offsetWidth;
+          el.classList.add('flip');
+        }
+      });
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ============================================================
+    // ===== SEARCH: gallery carousel =====
+    // ============================================================
+    // ===== SEARCH: gallery images =====
+    const galleryImgs = [
+      'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=225&fit=crop',
+      'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400&h=225&fit=crop',
+      'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=225&fit=crop',
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=225&fit=crop'
+    ];
+    let currentGallery = 0;
+    let galleryTimer;
+    function nextGallery() {
+      const img = document.getElementById('galleryImg');
+      img.classList.add('fade');
+      clearTimeout(galleryTimer);
+      galleryTimer = setTimeout(() => {
+        currentGallery = (currentGallery + 1) % galleryImgs.length;
+        img.style.backgroundImage = 'url(' + galleryImgs[currentGallery] + ')';
+        setTimeout(() => img.classList.remove('fade'), 30);
+        document.querySelectorAll('.gallery-dot').forEach((d, i) => {
+          d.style.background = i === currentGallery ? '#c8a24a' : '#3a3a3a';
+          d.style.width = i === currentGallery ? '20px' : '6px';
+          d.style.borderRadius = i === currentGallery ? '3px' : '50%';
+        });
+      }, 400);
+    }
+    setInterval(nextGallery, 4000);
+
+    // ============================================================
+    // ===== SEARCH: modal system =====
+    // ============================================================
+    let activeModal = null;
+    const backdrops = [];
+
+    function openModal(name) {
+      closeAllModals();
+      const sheet = document.getElementById('modal-' + name);
+      if (!sheet) return;
+      const backdrop = document.createElement('div');
+      backdrop.className = 'modal-backdrop';
+      backdrop.onclick = () => closeModal(name);
+      document.body.appendChild(backdrop);
+      backdrops.push(backdrop);
+      sheet.classList.add('open');
+      activeModal = name;
+      // highlight taskbar
+      document.querySelectorAll('.taskbar-icon-circle').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.taskbar-label').forEach(el => el.classList.remove('active'));
+      const tb = document.getElementById('tb-' + name);
+      const tbl = document.getElementById('tbl-' + name);
+      if (tb) tb.classList.add('active');
+      if (tbl) tbl.classList.add('active');
+    }
+
+    function closeModal(name) {
+      const sheet = document.getElementById('modal-' + name);
+      if (sheet) sheet.classList.remove('open');
+      if (backdrops.length) {
+        const b = backdrops.pop();
+        b.remove();
+      }
+      activeModal = null;
+      document.querySelectorAll('.taskbar-icon-circle').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.taskbar-label').forEach(el => el.classList.remove('active'));
+    }
+
+    function closeAllModals() {
+      document.querySelectorAll('.modal-sheet').forEach(s => s.classList.remove('open'));
+      while (backdrops.length) backdrops.pop().remove();
+      document.querySelectorAll('.taskbar-icon-circle').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.taskbar-label').forEach(el => el.classList.remove('active'));
+      activeModal = null;
+    }
+
+    // ============================================================
+    // ===== SEARCH: music player =====
+    // ============================================================
+    let isPlaying = false;
+    let isMuted = false;
+    const audioEl = document.getElementById('bgMusic');
+    audioEl.loop = true;
+    audioEl.volume = parseFloat(document.getElementById('volumeSlider').value);
+
+    function togglePlayPause() {
+      if (isPlaying) {
+        audioEl.pause();
+        isPlaying = false;
+        stopVinyl();
+        updatePlayBtn();
+        updatePlayStatus();
+      } else {
+        isPlaying = true;
+        updatePlayBtn();
+        updatePlayStatus();
+        audioEl.play().then(() => { startVinyl(); }).catch(() => { isPlaying = false; updatePlayBtn(); updatePlayStatus(); });
+      }
+    }
+
+    function updatePlayBtn() {
+      const btn = document.getElementById('playBtn');
+      if (isPlaying) {
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+      } else {
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white" class="ml-0.5"><path d="M6 4l14 8-14 8V4z"/></svg>';
+      }
+    }
+
+    function updatePlayStatus() {
+      document.getElementById('playStatus').textContent = isPlaying ? 'Playing' : 'Paused';
+    }
+
+    function startVinyl() {
+      const disc = document.getElementById('vinylDisc');
+      const arm = document.getElementById('tonearm');
+      arm.style.transform = 'rotate(-20deg)';
+      disc.style.animationPlayState = 'running';
+      animateEQ(true);
+    }
+
+    function stopVinyl() {
+      const arm = document.getElementById('tonearm');
+      arm.style.transform = 'rotate(-38deg)';
+      const disc = document.getElementById('vinylDisc');
+      disc.style.animationPlayState = 'paused';
+      animateEQ(false);
+    }
+
+    function animateEQ(active) {
+      document.querySelectorAll('.eq-bar').forEach(bar => {
+        if (active) {
+          bar.style.transform = 'scaleY(' + (Math.random() * 0.8 + 0.2) + ')';
+          bar.style.opacity = '0.8';
+        } else {
+          bar.style.transform = 'scaleY(0.15)';
+          bar.style.opacity = '0.3';
+        }
+      });
+      if (active && isPlaying) setTimeout(() => animateEQ(true), 150);
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      audioEl.muted = isMuted;
+    }
+
+    document.getElementById('volumeSlider').addEventListener('input', function() {
+      audioEl.volume = parseFloat(this.value);
+      if (audioEl.volume > 0 && isMuted) { isMuted = false; audioEl.muted = false; }
+    });
+
+    // ============================================================
+    // ===== SEARCH: save the date =====
+    // ============================================================
+    function saveDate() {
+      const dateStr = '20260819T200000';
+      const ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:زفاف ' + NAME_ONE + ' & ' + NAME_TWO + '\nDTSTART:' + dateStr + '\nDTEND:' + dateStr + '\nLOCATION:Grand Ballroom\nDESCRIPTION:زفاف ' + NAME_ONE + ' & ' + NAME_TWO + '\nEND:VEVENT\nEND:VCALENDAR';
+      const blob = new Blob([ics], {type: 'text/calendar'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'wedding.ics';
+      a.click();
+    }
+
+    // ============================================================
+    // ===== SEARCH: timeline / scroll animations =====
+    // ============================================================
+    const timelineDots = document.querySelectorAll('.timeline-dot-inner');
+    const timelineTimes = document.querySelectorAll('.timeline-time span');
+    const timelineTitles = document.querySelectorAll('.timeline-title span');
+
+    function checkTimeline() {
+      const rect = document.querySelector('.timeline-outer');
+      if (!rect) return;
+      const containerTop = rect.getBoundingClientRect().top;
+      const items = document.querySelectorAll('.timeline-item');
+      items.forEach((item, i) => {
+        const itemTop = item.getBoundingClientRect().top - containerTop - 100;
+        if (itemTop < window.innerHeight * 0.6) {
+          if (timelineDots[i]) timelineDots[i].classList.add('active');
+          item.classList.add('active');
+          if (timelineTimes[i]) { timelineTimes[i].style.opacity = '1'; timelineTimes[i].style.transform = 'translateX(0)'; }
+          if (timelineTitles[i]) { timelineTitles[i].style.opacity = '1'; timelineTitles[i].style.transform = 'translateX(0)'; }
+        }
+      });
+    }
+
+    // init timeline items hidden
+    timelineTimes.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateX(-6px)'; el.style.transition = 'all 0.4s ease'; });
+    timelineTitles.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateX(6px)'; el.style.transition = 'all 0.4s ease 0.08s'; });
+
+    window.addEventListener('scroll', checkTimeline);
+    setTimeout(checkTimeline, 500);
+
+    // ===== Interactive: toggle timeline descriptions =====
+    function toggleTimeline(el) {
+      const desc = el.querySelector('.timeline-desc');
+      if (!desc) return;
+      const isOpen = desc.style.maxHeight !== '0px' && desc.style.maxHeight !== '';
+      // close all others
+      document.querySelectorAll('.timeline-desc').forEach(d => { d.style.maxHeight = '0'; });
+      document.querySelectorAll('.timeline-item').forEach(i => i.classList.remove('expanded'));
+      if (!isOpen) {
+        desc.style.maxHeight = desc.scrollHeight + 'px';
+        el.classList.add('expanded');
+      }
+    }
+
+    // ===== Interactive: 3D tilt on glass cards =====
+    document.querySelectorAll('.glass-card').forEach(card => {
+      card.classList.add('glass-card-3d');
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg)';
+      });
+    });
+
+    // ===== Interactive: floating sparkles follow cursor =====
+    let sparkleTrailTimer;
+    document.addEventListener('mousemove', (e) => {
+      clearTimeout(sparkleTrailTimer);
+      sparkleTrailTimer = setTimeout(() => {
+        const spark = document.createElement('div');
+        spark.style.cssText = `position:fixed;width:6px;height:6px;border-radius:50%;background:#C8A24A;pointer-events:none;z-index:9999;left:${e.clientX-3}px;top:${e.clientY-3}px;box-shadow:0 0 10px rgba(200,162,74,0.6);transition:all 0.6s ease;opacity:1;`;
+        document.body.appendChild(spark);
+        requestAnimationFrame(() => {
+          spark.style.transform = 'translateY(-20px) scale(0)';
+          spark.style.opacity = '0';
+        });
+        setTimeout(() => spark.remove(), 600);
+      }, 50);
+    });
+
+    // ===== Interactive: scroll progress bar =====
+    const progressBar = document.createElement('div');
+    progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#C8A24A,#F0D98A);z-index:10000;transition:width 0.1s;';
+    document.body.appendChild(progressBar);
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    });
+
+    // ===== Interactive: smooth reveal for rules =====
+    document.querySelectorAll('.rule-item').forEach((item, i) => {
+      setTimeout(() => {
+        const card = item.querySelector('.rule-card');
+        if (card) { card.classList.add('visible'); }
+      }, 300 + i * 120);
+    });
+  </script>
+</body>
+</html>
