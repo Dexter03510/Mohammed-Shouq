@@ -198,14 +198,19 @@
     .timeline-line {
       position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
       transform: translateX(-50%);
-      background: linear-gradient(to bottom, transparent, rgba(200,162,74,0.3), transparent);
+      background: linear-gradient(to bottom, transparent, rgba(200,162,74,0.2), transparent);
+    }
+    .timeline-checkpoint {
+      position: absolute; left: 50%; top: 50%; width: 1px; height: 1px;
+      transform: translate(-50%,-50%);
+      pointer-events: none; z-index: 5;
     }
     .timeline-item { position: relative; display: flex; align-items: center; min-height: 68px; }
     .timeline-item:hover .timeline-dot-inner { background: #C8A24A; }
     .timeline-time { width: calc(50% - 14px); display: flex; align-items: center; justify-content: flex-end; padding-right: 24px; }
     .timeline-time span { font-size: 0.875rem; font-weight: 700; text-align: right; color: #a0a0a0; transition: color 0.3s; }
     .timeline-dot { display: flex; align-items: center; justify-content: center; width: 28px; flex-shrink: 0; z-index: 10; }
-    .timeline-dot-inner { width: 10px; height: 10px; border-radius: 50%; background: rgba(200,162,74,0.25); transition: all 0.5s; }
+    .timeline-dot-inner { width: 10px; height: 10px; border-radius: 50%; background: rgba(200,162,74,0.08); transition: all 0.6s ease; box-shadow: none; }
     .timeline-dot-inner.active { background: #C8A24A; box-shadow: 0 0 0 4px rgba(200,162,74,0.3), 0 0 18px 8px rgba(200,162,74,0.35); transform: scale(1.5); animation: glowPulse 2s ease-in-out infinite; }
     .timeline-item.active .timeline-time span,
     .timeline-item.active .timeline-title span { color: #C8A24A; }
@@ -578,6 +583,7 @@
           <h3 class="program-header">برنامج الحفل</h3>
           <div class="timeline-outer">
             <div class="timeline-line"></div>
+            <div class="timeline-checkpoint"></div>
 
             <div class="timeline-item" onclick="toggleTimeline(this)" style="cursor:pointer;flex-direction:column;">
               <div style="display:flex;align-items:center;width:100%;min-height:68px;">
@@ -930,6 +936,9 @@
     const particlesContainer = document.getElementById('particles-container');
     let envelopeOpened = false;
 
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
     sealBtn.addEventListener('click', () => {
       if (envelopeOpened) return;
       envelopeOpened = true;
@@ -942,9 +951,30 @@
         overlay.classList.add('open');
         taskbar.style.display = 'flex';
         startParticles();
+        startAutoScroll();
       }, 1200);
       setTimeout(() => { overlay.style.display = 'none'; }, 2000);
     });
+
+    let autoScrollId = null;
+    function startAutoScroll() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      function step() {
+        const remaining = maxScroll - window.scrollY;
+        if (remaining > 1) {
+          window.scrollBy(0, 2);
+          autoScrollId = setTimeout(step, 20);
+        }
+      }
+      setTimeout(step, 500);
+      ['click', 'touchstart', 'keydown', 'wheel'].forEach(evt => {
+        document.addEventListener(evt, stopAutoScroll, { once: true });
+      });
+    }
+    function stopAutoScroll() {
+      clearTimeout(autoScrollId);
+      autoScrollId = null;
+    }
 
     setTimeout(() => {
       if (!envelopeOpened) {
@@ -1199,13 +1229,11 @@
     const timelineTitles = document.querySelectorAll('.timeline-title span');
 
     function checkTimeline() {
-      const rect = document.querySelector('.timeline-outer');
-      if (!rect) return;
-      const containerTop = rect.getBoundingClientRect().top;
+      const triggerPoint = window.innerHeight * 0.7;
       const items = document.querySelectorAll('.timeline-item');
       items.forEach((item, i) => {
-        const itemTop = item.getBoundingClientRect().top - containerTop - 100;
-        if (itemTop < window.innerHeight * 0.6) {
+        const itemTop = item.getBoundingClientRect().top;
+        if (itemTop < triggerPoint) {
           if (timelineDots[i]) timelineDots[i].classList.add('active');
           item.classList.add('active');
           if (timelineTimes[i]) { timelineTimes[i].style.opacity = '1'; timelineTimes[i].style.transform = 'translateX(0)'; }
@@ -1215,8 +1243,9 @@
     }
 
     // init timeline items hidden
-    timelineTimes.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateX(-6px)'; el.style.transition = 'all 0.4s ease'; });
-    timelineTitles.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateX(6px)'; el.style.transition = 'all 0.4s ease 0.08s'; });
+    timelineDots.forEach(el => { el.style.transition = 'all 0.6s ease'; });
+    timelineTimes.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateX(-8px)'; el.style.transition = 'all 0.5s ease'; });
+    timelineTitles.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateX(8px)'; el.style.transition = 'all 0.5s ease 0.1s'; });
 
     window.addEventListener('scroll', checkTimeline);
     setTimeout(checkTimeline, 500);
