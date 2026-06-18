@@ -840,23 +840,18 @@
     setTimeout(observeSections, 1500);
 
     // ===== Auto-scroll (stops on user interaction) =====
-    let autoScrollRaf = null;
-    let autoScrollTarget = 0;
-    const SCROLL_STEP = 0.3;
+    let autoScrollTimer = null;
+    const SCROLL_STEP = Math.max(1, Math.round(window.innerHeight * 0.003));
     function startAutoScroll() {
-      if (autoScrollRaf) return;
-      autoScrollTarget = window.scrollY;
-      function step() {
+      if (autoScrollTimer) return;
+      autoScrollTimer = setInterval(() => {
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        if (autoScrollTarget >= maxScroll) { stopAutoScroll(); return; }
-        autoScrollTarget = Math.min(autoScrollTarget + SCROLL_STEP, maxScroll);
-        window.scrollTo(0, autoScrollTarget);
-        autoScrollRaf = requestAnimationFrame(step);
-      }
-      autoScrollRaf = requestAnimationFrame(step);
+        if (window.scrollY >= maxScroll - 2) { stopAutoScroll(); return; }
+        window.scrollBy(0, SCROLL_STEP);
+      }, 50);
     }
     function stopAutoScroll() {
-      if (autoScrollRaf) { cancelAnimationFrame(autoScrollRaf); autoScrollRaf = null; }
+      if (autoScrollTimer) { clearInterval(autoScrollTimer); autoScrollTimer = null; }
     }
     ['wheel','touchstart','touchmove','keydown'].forEach(evt => {
       window.addEventListener(evt, stopAutoScroll, { passive: true });
